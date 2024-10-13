@@ -1,12 +1,12 @@
 import React from 'react';
 
-const ContactDetails = () => {
+const ContactDetails = ({userInfo}) => {
   return (
     <div className="text-center sm:text-left">
-      <h2 className="text-lg font-bold">Prénom Nom</h2>
-      <p className="text-gray-500">Société</p>
-      <p className="text-gray-500">contact@societe.com</p>
-      <p className="text-gray-500">+33 1 23 45 67 89</p>
+      <h2 className="text-lg font-bold">{userInfo.name}</h2>
+      <p className="text-gray-500">{userInfo.position}</p>
+      <p className="text-gray-500">{userInfo.email}</p>
+      <p className="text-gray-500">{userInfo.phone}</p>
     </div>
   );
 };
