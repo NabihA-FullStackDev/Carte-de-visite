@@ -4,6 +4,7 @@ import Card from "./components/Card";
 import Form from "./components/Form";
 import PDFGenerator from "./components/PDFGenerator";
 import { getBase64Image } from "./utils/getBase64Image";
+import { FaEdit } from "react-icons/fa";
 
 const App = () => {
   const [userInfo, setUserInfo] = useState({
@@ -17,6 +18,7 @@ const App = () => {
   });
 
   const [profileImage, setProfileImage] = useState("");
+  const [isFormVisible, setIsFormVisible] = useState(false);
 
   useEffect(() => {
     if (userInfo.imageUrl) {
@@ -25,6 +27,10 @@ const App = () => {
       });
     }
   }, [userInfo.imageUrl]);
+
+  const toggleFormVisibility = () => {
+    setIsFormVisible(!isFormVisible);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,9 +50,22 @@ const App = () => {
 
   return (
     <div className="App">
-      <Card userInfo={userInfo} profileImage={profileImage} />
-      <Form userInfo={userInfo} handleChange={handleChange} handleImageChange={handleImageChange} />
-      <PDFGenerator userInfo={userInfo} profileImage={profileImage} />
+      <div className="flex justify-center place-items-center space-x-4">
+        <Card userInfo={userInfo} profileImage={profileImage} />
+      </div>
+      {isFormVisible && (
+          <Form
+            userInfo={userInfo}
+            handleChange={handleChange}
+            handleImageChange={handleImageChange}
+          />
+        )}
+      <div className="flex flex-row justify-center place-items-center space-x-4 w-full text-center">
+        <PDFGenerator userInfo={userInfo} profileImage={profileImage} />
+        <div className="icon-container" onClick={toggleFormVisibility}>
+          <FaEdit size={24} className="cursor-pointer" />{" "}
+        </div>
+      </div>
     </div>
   );
 };

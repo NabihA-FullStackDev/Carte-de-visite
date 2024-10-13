@@ -4,34 +4,34 @@ import { getBase64Image } from "../utils/getBase64Image";
 import { drawRoundedRect } from "../utils/drawRoundedRect";
 
 const PDFGenerator = ({ userInfo, profileImage }) => {
-  const linkedinLogoUrl =
-    "https://cdn-icons-png.flaticon.com/512/174/174857.png"; // Lien vers le logo LinkedIn
-  const githubLogoUrl = "https://cdn-icons-png.flaticon.com/512/733/733553.png"; // Lien vers le logo GitHub
+  const linkedinLogoUrl = "https://cdn-icons-png.flaticon.com/512/174/174857.png";
+  const githubLogoUrl = "https://cdn-icons-png.flaticon.com/512/733/733553.png";
 
   const generatePDF = () => {
     const doc = new jsPDF("p", "mm", "a4");
 
-    const cardWidth = 140; // Largeur de la carte
-    const borderRadius = 10; // Rayon des coins arrondis
-    const shadowOffset = 0.5; // Décalage pour l'ombre
+    //TODO Dynamiser les dimensions
+    const cardWidth = 140;
+    const borderRadius = 10;
+    const shadowOffset = 0.5;
 
     const pageWidth = doc.internal.pageSize.getWidth();
-    const startX = (pageWidth - cardWidth) / 2; // Centrer la carte
-    const startY = 10; // Position fixe en haut de la page
+    const startX = (pageWidth - cardWidth) / 2;
+    const startY = 10;
 
     // ---- Calculer la hauteur dynamique du contenu ----
-    let currentY = startY + 10; // Position de départ du contenu
-    const imageWidth = 56; // Largeur de l'image
+    let currentY = startY + 10;
+    const imageWidth = 56;
 
     if (profileImage) {
-      currentY += imageWidth; // Ajouter la hauteur de l'image + espacement
+      currentY += imageWidth;
     } else {
       currentY += 45;
     }
 
-    const socialIconsY = currentY; // Position pour les logos sociaux
+    const socialIconsY = currentY;
     if (userInfo.github || userInfo.linkedin) {
-      currentY += 20; // Ajouter la hauteur pour les logos
+      currentY += 20;
     }
 
     // ---- Dessiner l'ombre et le fond ----
@@ -43,7 +43,7 @@ const PDFGenerator = ({ userInfo, profileImage }) => {
       currentY,
       borderRadius,
       shadowOffset
-    ); // Dessiner l'ombre (gris léger)
+    );
     drawRoundedRect(
       doc,
       startX,
@@ -53,12 +53,12 @@ const PDFGenerator = ({ userInfo, profileImage }) => {
       borderRadius,
       0,
       true
-    ); // Dessiner le fond blanc
+    );
 
     // ---- Ajouter l'image et le texte après avoir dessiné l'ombre et le fond ----
-    let contentY = startY + 10; // Réinitialiser la position pour le contenu
+    let contentY = startY + 10;
 
-    const textStartX = startX + (cardWidth - imageWidth - cardWidth / 2) / 2; // Centrer l'image et le texte horizontalement
+    const textStartX = startX + (cardWidth - imageWidth - cardWidth / 2) / 2;
 
     if (profileImage) {
       doc.addImage(
@@ -68,39 +68,39 @@ const PDFGenerator = ({ userInfo, profileImage }) => {
         contentY,
         imageWidth,
         imageWidth
-      ); // Ajouter l'image de profil
-      contentY += 15; // Ajuster après l'image
+      );
+      contentY += 15;
     }
 
-    const textOffsetX = textStartX + imageWidth + 10; // Le texte commence après l'image
+    const textOffsetX = textStartX + imageWidth + 10;
 
     // Ajouter le texte à droite de l'image
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
-    doc.text(userInfo.name, textOffsetX, contentY); // Nom à côté de l'image
+    doc.text(userInfo.name, textOffsetX, contentY);
     contentY += 10;
 
     doc.setFontSize(12);
     doc.setFont("helvetica", "normal");
-    doc.text(userInfo.position, textOffsetX, contentY); // Position
+    doc.text(userInfo.position, textOffsetX, contentY);
     contentY += 10;
-    doc.text(userInfo.email, textOffsetX, contentY); // Email
+    doc.text(userInfo.email, textOffsetX, contentY);
     contentY += 10;
-    doc.text(userInfo.phone, textOffsetX, contentY); // Téléphone
-    contentY += 15; // Ajouter un espace après le texte
+    doc.text(userInfo.phone, textOffsetX, contentY);
+    contentY += 15;
 
     // ---- Ajouter les logos des réseaux sociaux ----
-    const linkedinLogoX = textOffsetX; // Position du logo LinkedIn
-    const githubLogoX = linkedinLogoX + 15; // Position du logo GitHub
+    const linkedinLogoX = textOffsetX;
+    const githubLogoX = linkedinLogoX + 15;
 
     if (userInfo.linkedin) {
       getBase64Image(linkedinLogoUrl, (base64LinkedIn) => {
-        doc.addImage(base64LinkedIn, "PNG", linkedinLogoX, socialIconsY, 7, 7); // Logo LinkedIn
+        doc.addImage(base64LinkedIn, "PNG", linkedinLogoX, socialIconsY, 7, 7);
 
         if (userInfo.github) {
           getBase64Image(githubLogoUrl, (base64Github) => {
-            doc.addImage(base64Github, "PNG", githubLogoX, socialIconsY, 7, 7); // Logo GitHub
-            doc.save("carte-de-visite.pdf"); // Enregistrer le PDF une fois terminé
+            doc.addImage(base64Github, "PNG", githubLogoX, socialIconsY, 7, 7);
+            doc.save("carte-de-visite.pdf");
           });
         } else {
           doc.save("carte-de-visite.pdf");
@@ -108,7 +108,7 @@ const PDFGenerator = ({ userInfo, profileImage }) => {
       });
     } else if (userInfo.github) {
       getBase64Image(githubLogoUrl, (base64Github) => {
-        doc.addImage(base64Github, "PNG", githubLogoX, socialIconsY, 7, 7); // Logo GitHub
+        doc.addImage(base64Github, "PNG", githubLogoX, socialIconsY, 7, 7);
         doc.save("carte-de-visite.pdf");
       });
     } else {
