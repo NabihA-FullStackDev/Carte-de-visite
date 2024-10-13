@@ -62,22 +62,10 @@ Si vous souhaitez réutiliser cette carte de visite dans un autre projet React :
    npm install react-icons
    ```
 
-   Ensuite, importez les icônes dans vos fichiers React, par exemple dans `Card.js` :
-
-   ```javascript
-   import { FaLinkedin, FaGithub } from 'react-icons/fa';
-   ```
-
 4. **Installer Font Awesome** pour d'autres icônes si nécessaire :
 
    ```bash
    npm install --save font-awesome
-   ```
-
-   Et ajoutez l'importation suivante dans votre `index.js` ou `App.js` :
-
-   ```javascript
-   import 'font-awesome/css/font-awesome.min.css';
    ```
 
 ### Génération PDF
