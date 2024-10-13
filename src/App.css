@@ -1,9 +1,23 @@
-.container {
-  width: 512px;
-  height: auto;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.App {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 20px;
-  margin: auto;
+  align-items: center; /* Centrage horizontal */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 16px;
+  background-color: #f7fafc;
+}
+
+.card-hover {
+  cursor: pointer;
+  width: 100%;
+  max-width: 350px;
+}
+
+.card-hover:hover {
+  transform: scale(1.05);
 }
